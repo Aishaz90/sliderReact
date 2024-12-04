@@ -8,8 +8,7 @@ function App() {
   const [dragging, setDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
-  const [rotation, setRotation] = useState(0); // The current rotation of the flag
-  const flagContainerRef = useRef(null); // Ref to access the flag container
+  const flagContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -28,27 +27,21 @@ function App() {
 
   const onMouseDown = (e) => {
     setDragging(true);
-    setStartX(e.clientX); // Store where the drag starts
+    setStartX(e.clientX);
   };
 
   const onMouseMove = (e) => {
     if (!dragging) return;
 
-    const deltaX = e.clientX - startX; // Calculate how much the mouse has moved
-    setCurrentX(deltaX); // Track the current drag position
-    setRotation(deltaX / 5); // Control the rotation speed (smaller divisor = faster rotation)
+    const deltaX = e.clientX - startX;
+    setCurrentX(deltaX);
   };
 
   const onMouseUp = () => {
-    setDragging(false); // Stop dragging
-    setRotation(0); // Reset rotation when dragging ends
-
-    // Decide whether to flip to the next or previous flag based on drag direction
+    setDragging(false);
     if (currentX > 100) {
-      // Dragged enough to flip to the next flag
       setCurrentIndex((prevIndex) => (prevIndex + 1) % countries.length);
     } else if (currentX < -100) {
-      // Dragged enough to flip to the previous flag
       setCurrentIndex(
         (prevIndex) => (prevIndex - 1 + countries.length) % countries.length
       );
@@ -67,12 +60,10 @@ function App() {
 
   return (
     <div className="App">
-      {/* Header */}
       <header className="header">
         <img src="/logo-removebg-preview.png" alt="Logo" />
       </header>
 
-      {/* Main Content */}
       <main>
         {countries.length === 0 ? (
           <p>Loading flags...</p>
@@ -84,40 +75,72 @@ function App() {
             </video>
 
             <div className="slider">
-              {/* Previous Button */}
               <button className="prev" onClick={prevFlag}>
-                
+                ◀
               </button>
 
-              {/* Flag Container with Drag to Rotate */}
               <div
-                className="flag-container"
-                ref={flagContainerRef}
-                onMouseDown={onMouseDown}
-                onMouseMove={onMouseMove}
-                onMouseUp={onMouseUp}
-                onMouseLeave={onMouseUp} // Reset when mouse leaves the flag
-                
+                className="flag-container-wrapper"
+                style={{
+                  transform: `rotateY(${currentIndex * -120}deg)`, // Rotate carousel
+                }}
               >
-                <img
-                  src={countries[currentIndex].flags.png}
-                  alt={countries[currentIndex].name.common}
-                  className="flag"
-                />
-                <h2>{countries[currentIndex].name.common}</h2>
-                <p>Region: {countries[currentIndex].region}</p>
+                <div
+                  className="flag-container"
+                  ref={flagContainerRef}
+                  onMouseDown={onMouseDown}
+                  onMouseMove={onMouseMove}
+                  onMouseUp={onMouseUp}
+                  onMouseLeave={onMouseUp}
+                >
+                  <img
+                    src={countries[currentIndex].flags.png}
+                    alt={countries[currentIndex].name.common}
+                    className="flag"
+                  />
+                  <h2>{countries[currentIndex].name.common}</h2>
+                  <p>Region: {countries[currentIndex].region}</p>
+                </div>
+
+                <div
+                  className="flag-container"
+                  style={{
+                    transform: "rotateY(120deg) translateZ(500px)", // Further separation
+                  }}
+                >
+                  <img
+                    src={countries[(currentIndex + 1) % countries.length].flags.png}
+                    alt={countries[(currentIndex + 1) % countries.length].name.common}
+                    className="flag"
+                  />
+                  <h2>{countries[(currentIndex + 1) % countries.length].name.common}</h2>
+                  <p>Region: {countries[(currentIndex + 1) % countries.length].region}</p>
+                </div>
+
+                <div
+                  className="flag-container"
+                  style={{
+                    transform: "rotateY(-120deg) translateZ(500px)", // Further separation
+                  }}
+                >
+                  <img
+                    src={countries[(currentIndex - 1 + countries.length) % countries.length].flags.png}
+                    alt={countries[(currentIndex - 1 + countries.length) % countries.length].name.common}
+                    className="flag"
+                  />
+                  <h2>{countries[(currentIndex - 1 + countries.length) % countries.length].name.common}</h2>
+                  <p>Region: {countries[(currentIndex - 1 + countries.length) % countries.length].region}</p>
+                </div>
               </div>
 
-              {/* Next Button */}
               <button className="next" onClick={nextFlag}>
-                
+                ▶
               </button>
             </div>
           </>
         )}
       </main>
 
-      {/* Footer */}
       <footer>
         <h4>A dynamic platform to explore and discover flags of countries worldwide, symbolizing global wanderlust and cultural exploration.</h4>
       </footer>
