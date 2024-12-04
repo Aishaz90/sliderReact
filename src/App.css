@@ -1,38 +1,145 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background: #c6dbf1;
+  text-align: center;
+  margin-left: 25%;
+  width: 50%;
+  height: 150px;
+  border-radius: 0 0 30px 30px;
+}
+
+.header img {
+  margin: 0;
+  width: 40%;
+  margin-top: -2%;
+}
+.header p{
+  font-size: 1rem; /* Adjust size as needed */
+  font-weight: bold;
+  color: #060606; /* Primary color for the title */
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  text-align: center; /* Center-align the title */
+  margin: 20px 0;
+
+}
+.slider {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  position: relative;
+  height: 500px;
+  margin: 3rem;
+  overflow: hidden;
+}
+
+.flag-container {
+  text-align: center;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform 1s ease-out; /* Smooth reset */
+}
+.flag-container h2,p{
+  color: #c6dbf1;
+  font-size:25px;
+}
+.flag {
+  width: 300px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform-origin: center;
+}
+
+
+/* Style for the Next and Previous buttons */
+button {
+  background: #d41c0c;
   color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  position: absolute; /* Absolute positioning inside the slider */
+  top: 40%; /* Vertically center the buttons */
+  margin-left: 20%;
+  margin-right: 20%;
+  transform: translateY(-50%); /* Adjust button position vertically */
+  z-index: 10; /* Ensure buttons are above other content */
+  transition: background 0.3s ease;
+  font-size: 1.5rem; /* Adjust button size */
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background: #d04205; /* Darken button on hover */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Position for the Previous button */
+.prev {
+  left: 10px; /* Position the previous button on the left */
+}
+
+/* Position for the Next button */
+.next {
+  right: 10px; /* Position the next button on the right */
+}
+
+/* Add arrow styles */
+.prev::before {
+  content: '◀'; /* Add the left arrow symbol */
+  font-size: 2rem; /* Increase the font size for the arrow */
+}
+
+.next::before {
+  content: '▶'; /* Add the right arrow symbol */
+  font-size: 2rem; /* Increase the font size for the arrow */
+}
+
+.footer {
+  text-align: center;
+  background: #0078d4;
+  color: white;
+  padding: 1rem 0;
+  margin-top: auto;
+}
+#myVideo {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  width: 100%; /* Adjust width to make the video smaller */
+  height: auto; /* Maintain aspect ratio */
+  z-index: -1;
+  transform: translate(-50%, -50%);
+}
+footer {
+  background-color: #c6dbf1;  /* Background color for footer */
+  text-align: center;         /* Center the text */
+  padding: 20px;              /* Padding around the text */
+  font-family: Arial, sans-serif; /* Font */
+  font-size: 1.2em;           /* Increase font size */
+margin-top: -2%;  
+}
+
+footer h4 {
+  line-height: 1.5;           /* Line height for better readability */
+  margin: 0;  
+  height: 20px;
+  color: #3d426b;                /* Remove default margin */
+  max-width: 80%;             /* Limit the width */
+  margin-left: auto;          /* Center align horizontally */
+  margin-right: auto;         /* Center align horizontally */
+  font-weight: normal;        /* Ensure it's not too bold */
 }
